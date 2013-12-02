@@ -10,7 +10,7 @@ public class GPTree {
 	}
 	
 	String [] operators = {"+","-","*","/"};
-	String [] operatants = {"1","2","3","4","5","6","7","8","9","10"};
+	String [] operatants = {"0","1","2","3","4","5","6","7","8","9","10"};
 	
 	int index1,index2;
 	Random generator = new Random();
