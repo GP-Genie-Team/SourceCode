@@ -4,42 +4,57 @@ public class GPTree {
 	
 	
 	public TreeNode rootnode = new TreeNode(); //every tree should have at least a root node
-	public GPTree()
-	{
-		rootnode = null;
-	}
+	public double fitness;
+	
 	
 	String [] operators = {"+","-","*","/"};
 	String [] operatants = {"0","1","2","3","4","5","6","7","8","9","10"};
 	
-	int index1,index2;
+	int index1, index2;
 	Random generator = new Random();
-	
-	
-	public void GenTree(TreeNode temp)
+	//constructor, here use code to make sure that the root is an operator
+	public GPTree()
 	{
-		index1 = generator.nextInt(1);
-		
-		if (index1==1)
-		{
-			index2 = generator.nextInt(3);
-			TreeNode newnode = new TreeNode(operators[index2]);
-			temp = newnode;
+		index1 = generator.nextInt(4);
+		rootnode = new TreeNode(operators[index1]);
+		rootnode.level=0;
+	}
+	
 
-				
-				GenTree(rootnode.left);
-				GenTree(rootnode.right);
+	
+	
+	public TreeNode GenTree(int hight)
+	{
+		//decide whether this is an operator or operatant
+		TreeNode temp;
+		
+		index1 = generator.nextInt(2);
+		//System.out.println(index1);
+		
+		if ((index1==1) | (hight ==10))
+		{
+			index2 = generator.nextInt(11);
+			TreeNode newnode = new TreeNode(operatants[index2]);
+			newnode.level = hight;
+			temp = newnode;
+			
 				
 		}
 		else
 		{
-			index2 = generator.nextInt(10);
-			TreeNode newnode = new TreeNode(operatants[index2]);
+			index2 = generator.nextInt(4);
+			TreeNode newnode = new TreeNode(operators[index2]);
+			newnode.level = hight;
+			newnode.left = GenTree(hight+1);
+			newnode.right = GenTree(hight+1);
 			temp = newnode;
+			
+
 			
 			
 		}
 		
+		return temp;
 		
 	}
 	
@@ -62,6 +77,8 @@ public class GPTree {
 		return d;
 	}
 	
+	
+	//used to calculate the fitness of the GP tree
 	public double EvaTree(TreeNode Temp)
 	{
 		double evaluation =0;
@@ -89,13 +106,16 @@ public class GPTree {
 	
 	{
 		if (temp.left!=null) printTree(temp.left);
-		System.out.println(temp.data);
-		printTree(temp.right);
+		System.out.print(temp.data);
+		if (temp.left!=null) printTree(temp.right);
 	}
 	
 
 
-
+	public void getFitness(){
+		this.fitness = EvaTree(rootnode);
+		
+	}
 	
 	
 }

@@ -4,7 +4,7 @@ import java.lang.*;
 public class TreeNode {
 	
 	public String data; //can be an operator or operand
-	public int ID;// use to track level
+	public int ID,level;// use to track level
 	public TreeNode left,right;
 
 	
@@ -12,16 +12,18 @@ public class TreeNode {
 	public TreeNode(String input)
 	{
 		this.data = input;
-		right = null;
-		left = null;
+		this.right = null;
+		this.left = null;
 		
 		
 	}
+	
+	
 	public TreeNode()
 	{
 		this.data = null;
-		right = null;
-		left = null;
+		this.right = null;
+		this.left = null;
 		
 		
 	}
