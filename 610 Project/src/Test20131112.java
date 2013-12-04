@@ -1,6 +1,6 @@
 import java.util.*;
 
-
+//susan testing checkin from new workspace
 public class Test20131112 {
 	public static void main (String [] arg){
 		int index, index1,index2;
