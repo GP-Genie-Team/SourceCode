@@ -6,6 +6,7 @@ public class TreeNode {
 	public String data; //can be an operator or operand
 	public int ID,level;// use to track level
 	public TreeNode left,right;
+	public boolean IsLeaf;
 
 	
 	//constructor
@@ -14,7 +15,7 @@ public class TreeNode {
 		this.data = input;
 		this.right = null;
 		this.left = null;
-		
+		this.IsLeaf = false;
 		
 	}
 	
@@ -24,6 +25,7 @@ public class TreeNode {
 		this.data = null;
 		this.right = null;
 		this.left = null;
+		this.IsLeaf = false;
 		
 		
 	}

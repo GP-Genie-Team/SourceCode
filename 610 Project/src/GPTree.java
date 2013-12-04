@@ -13,9 +13,17 @@ public class GPTree {
 	int index1, index2;
 	Random generator = new Random();
 	//constructor, here use code to make sure that the root is an operator
+	
+	public String ToString(double value)
+	{
+		String result = Double.toString(value);
+
+	      return result;
+
+	}
 	public GPTree()
 	{
-		index1 = generator.nextInt(4);
+		index1 = generator.nextInt(3);
 		rootnode = new TreeNode(operators[index1]);
 		rootnode.level=0;
 	}
@@ -34,15 +42,20 @@ public class GPTree {
 		if ((index1==1) | (hight ==10))
 		{
 			index2 = generator.nextInt(11);
-			TreeNode newnode = new TreeNode(operatants[index2]);
+			TreeNode newnode;
+			
+			newnode = new TreeNode(operatants[index2]);
+			
 			newnode.level = hight;
+			newnode.IsLeaf = true;
 			temp = newnode;
+			
 			
 				
 		}
 		else
 		{
-			index2 = generator.nextInt(4);
+			index2 = generator.nextInt(3);
 			TreeNode newnode = new TreeNode(operators[index2]);
 			newnode.level = hight;
 			newnode.left = GenTree(hight+1);
@@ -79,15 +92,20 @@ public class GPTree {
 	
 	
 	//used to calculate the fitness of the GP tree
-	public double EvaTree(TreeNode Temp)
+	public double EvaTree(TreeNode Temp, double value)
 	{
 		double evaluation =0;
 		
-		if (IsNumeric(Temp.data)) evaluation = ToDouble (Temp.data);
+		if (Temp.IsLeaf == true ) 
+		{
+			if (Temp.data.equals("10")) evaluation = value;
+			else evaluation = ToDouble(Temp.data);
+			
+		}
 		else
 		{
-			double leftvalue = EvaTree(Temp.left);
-			double rightvalue = EvaTree(Temp.right);
+			double leftvalue = EvaTree(Temp.left, value);
+			double rightvalue = EvaTree(Temp.right, value);
 			
 			if (Temp.data.compareTo("+") == 0) evaluation = leftvalue + rightvalue;
 			if (Temp.data.compareTo("-") == 0) evaluation = leftvalue - rightvalue;
@@ -112,10 +130,7 @@ public class GPTree {
 	
 
 
-	public void getFitness(){
-		this.fitness = EvaTree(rootnode);
-		
-	}
+
 	
 	
 }
