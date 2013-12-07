@@ -85,7 +85,7 @@ public class Test20131112 {
 			
 				Trees[index7] = Trees[index4];
 				Trees[index8] = Trees[index5];
-				mute.mutating(Trees[index7].rootnode, Trees[index8].rootnode);
+				mute.crossover(Trees[index7].rootnode, Trees[index8].rootnode);
 				
 			}
 			
