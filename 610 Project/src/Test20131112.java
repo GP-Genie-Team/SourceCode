@@ -7,6 +7,7 @@ public class Test20131112 {
 		
 		Trainingdata training = new Trainingdata();
 		
+		//li comment
 		// this part initialize the population, and sort them using the fitness data
 		GPTree [] Trees = new GPTree[5];
 		Trees[0] = new GPTree();
