@@ -4,6 +4,7 @@ public class Trainingdata {
 	
 
 	Random generator = new Random();
+	int index1,index2;
 	
 	public double [] training_input = new double[5];
 	public double [] training_output = new double[5];
@@ -20,3 +21,4 @@ public class Trainingdata {
 		}
 	}
 }
+

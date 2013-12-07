@@ -8,7 +8,7 @@ public class GPTree {
 	
 	
 	String [] operators = {"+","-","*","/"};
-	String [] operatants = {"0","1","2","3","4","5","6","7","8","9","10"};
+	String [] operatants = {"0","1","2","3","4","5","6","7","8","9","x"};
 	
 	int index1, index2;
 	Random generator = new Random();
@@ -39,7 +39,7 @@ public class GPTree {
 		index1 = generator.nextInt(2);
 		//System.out.println(index1);
 		
-		if ((index1==1) | (hight ==10))
+		if ((index1==1) | (hight == 5))
 		{
 			index2 = generator.nextInt(11);
 			TreeNode newnode;
@@ -55,7 +55,7 @@ public class GPTree {
 		}
 		else
 		{
-			index2 = generator.nextInt(3);
+			index2 = generator.nextInt(4);
 			TreeNode newnode = new TreeNode(operators[index2]);
 			newnode.level = hight;
 			newnode.left = GenTree(hight+1);
@@ -98,7 +98,7 @@ public class GPTree {
 		
 		if (Temp.IsLeaf == true ) 
 		{
-			if (Temp.data.equals("10")) evaluation = value;
+			if (Temp.data.equals("x")) evaluation = value;
 			else evaluation = ToDouble(Temp.data);
 			
 		}
@@ -128,7 +128,22 @@ public class GPTree {
 		if (temp.left!=null) printTree(temp.right);
 	}
 	
-
+	public void mutation(TreeNode temp1, TreeNode temp2)
+	{
+		if (temp1.IsLeaf && temp2.IsLeaf)
+		{String temp = temp1.data;
+		temp1.data = temp2.data;
+		temp2.data = temp;
+		}
+		else{
+			index1 = generator.nextInt(2);
+			index2 = generator.nextInt(2);
+			if (index1 == 0 && index2 ==0) mutation(temp1.left,temp2.left);
+			if (index1 == 1 && index2 ==0) mutation(temp1.right,temp2.left);
+			if (index1 == 0 && index2 ==1) mutation(temp1.left,temp2.right);
+			if (index1 == 1 && index2 ==1) mutation(temp1.right,temp2.right);
+		}
+	}
 
 
 	
