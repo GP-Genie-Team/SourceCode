@@ -1,15 +1,24 @@
 import java.util.*;
 
 
-public class Test20131112 {
+public class Calculating {
 	public static void main (String [] arg){
 		int index, index1,index2, index3, index4, index5;
 		
 		int index6, index7, index8;
 		
 		int index9, index10;
-		
+		long start,now, diff;
+
 		//TreeNode temp1, temp2;
+		GetInput getinput = new GetInput();
+		getinput.getvariable();
+		
+
+		
+		final int POPULATION = getinput.size;
+		int height = GetInput.height;
+		
 		
 		
 		Random generator = new Random();
@@ -20,14 +29,18 @@ public class Test20131112 {
 		
 		GPTree temp = new GPTree();
 		
-
+		//calculating current time
+		start = System.currentTimeMillis( );
+		diff = 0;
+		
+		
 		// this part initialize the population, and sort them using the fitness data
-		GPTree [] Trees = new GPTree[500];
+		GPTree [] Trees = new GPTree[POPULATION];
 		Trees[0] = new GPTree();
 
 		Trees[0].rootnode.left = Trees[0].GenTree(1);
 		Trees[0].rootnode.right = Trees[0].GenTree(1);
-		for (index2 = 0; index2<5; index2 ++)
+		for (index2 = 0; index2<45; index2 ++)
 		{
 			double value = training.training_input[index2];
 			Trees[0].fitness += Math.abs(Trees[0].EvaTree(Trees[0].rootnode,value)-training.training_output[index2]);
@@ -36,7 +49,7 @@ public class Test20131112 {
 		
 		
 		
-		for (index=1;index < 500; index ++)
+		for (index=1;index < POPULATION; index ++)
 		{
 			Trees[index] = new GPTree();
 			
@@ -45,12 +58,13 @@ public class Test20131112 {
 			
 			
 			index1 = index;
-			for (index2 = 0; index2<5; index2 ++)
+			for (index2 = 0; index2<45; index2 ++)
 			{
 				double value = training.training_input[index2];
 				Trees[index].fitness += Math.abs(Trees[index].EvaTree(Trees[index].rootnode,value)-training.training_output[index2]);
 				
 			}
+			
 			
 			temp = Trees[index];
 			while( (index1>0) && (temp.fitness<Trees[index1-1].fitness))
@@ -72,7 +86,7 @@ public class Test20131112 {
 		
 		//now generating next generation of population
 		//assuming keeping first 200 every time
-		
+		while (diff < GetInput.timeinterval*360){
 		for (index3 = 0; index <1; index ++)
 		{
 			//first, crossover, using the kept 200 to generate another 100
@@ -93,7 +107,16 @@ public class Test20131112 {
 			
 			for (index6 = 200; index6 <300; index ++)
 			{
+				
+				for (index2 = 0; index2<45; index2 ++)
+				{
+					double value = training.training_input[index2];
+					Trees[index6].fitness += Math.abs(Trees[index6].EvaTree(Trees[index6].rootnode,value)-training.training_output[index2]);
+					
+				}
+				
 				temp = Trees[index6];
+				
 				index8 = index6-1;
 				while( (index8>0) && (temp.fitness<Trees[index8-1].fitness))
 				{
@@ -120,6 +143,13 @@ public class Test20131112 {
 				
 				for (index6 = 300; index6 <400; index ++)
 				{
+					
+					for (index2 = 0; index2<45; index2 ++)
+					{
+						double value = training.training_input[index2];
+						Trees[index6].fitness += Math.abs(Trees[index6].EvaTree(Trees[index6].rootnode,value)-training.training_output[index2]);
+						
+					}
 					temp = Trees[index6];
 					index8 = index6-1;
 					while( (index8>0) && (temp.fitness<Trees[index8-1].fitness))
@@ -161,14 +191,20 @@ public class Test20131112 {
 			
 			
 		}
+		now = System.currentTimeMillis( );
+		diff = now - start;
+
+		
+		}
 	
-		for (index =0; index <5; index ++)
+		/*for (index =0; index <500; index ++)
 		{
 			System.out.println(Trees[index].fitness);
 		}
+		*/
+		
 		
 		Trees[0].printTree(Trees[0].rootnode);
 	}
-	
-	
+
 }

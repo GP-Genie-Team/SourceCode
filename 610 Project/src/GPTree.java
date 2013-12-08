@@ -13,6 +13,7 @@ public class GPTree {
 	int index1, index2;
 	Random generator = new Random();
 	//constructor, here use code to make sure that the root is an operator
+	final int HEIGHT = GetInput.height;
 	
 	public String ToString(double value)
 	{
@@ -39,7 +40,7 @@ public class GPTree {
 		index1 = generator.nextInt(2);
 		//System.out.println(index1);
 		
-		if ((index1==1) | (hight == 5))
+		if ((index1==1) | (hight == HEIGHT))
 		{
 			index2 = generator.nextInt(11);
 			TreeNode newnode;
@@ -110,7 +111,12 @@ public class GPTree {
 			if (Temp.data.compareTo("+") == 0) evaluation = leftvalue + rightvalue;
 			if (Temp.data.compareTo("-") == 0) evaluation = leftvalue - rightvalue;
 			if (Temp.data.compareTo("*") == 0) evaluation = leftvalue * rightvalue;
-			if (Temp.data.compareTo("/") == 0) evaluation = leftvalue / rightvalue;
+			if (Temp.data.compareTo("/") == 0) 
+				{
+				if (Math.abs(rightvalue) <0.00001) evaluation = 99999999;
+				
+				
+				}
 			
 			
 		}

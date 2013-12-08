@@ -5,6 +5,7 @@ public class Mutation {
 	
 	Random generator = new Random();
 	int index1,index2;
+
 	
 	public void crossover(TreeNode temp1, TreeNode temp2)
 	{
@@ -38,7 +39,23 @@ public class Mutation {
 			if (index1 == 1 && index2 ==1) crossover(temp1.right,temp2.right);
 		}
 	}
-
+	public void mutating(TreeNode temp)
+	{
+		if (temp.left.IsLeaf)
+		{
+			String data = temp.left.data;
+			temp.left.data= temp.right.data;
+			temp.right.data = temp.left.data; 
+		}
+		else
+		{
+			index1 = generator.nextInt(2);
+			if (index1==1) mutating(temp.left);
+			else mutating(temp.right);
+		}
+			
+	}
+	
 	}
 
 
