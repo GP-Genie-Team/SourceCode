@@ -36,6 +36,7 @@ public class GetInput {
 	
 	public void getvariable ()
 	{
+		System.out.println(" Welcome to GP Genie! ");
 		while (IsValid == false)
 		{
 			System.out.println("Please enter the height of tree you would like to use for this peoject (bwtween 1 to 10): ");
@@ -72,10 +73,10 @@ public class GetInput {
 		
 		while (IsValid == false)
 		{
-			System.out.println("Please enter the percentage of population you would like to keep for this peoject (bwtween 10 to 20): ");
+			System.out.println("Please enter the percentage of population you would like to keep for this peoject (bwtween 10 to 30): ");
 			percent = scan.nextInt();
 		
-			if (percent<=20 && percent >=10) 
+			if (percent<=30 && percent >=10) 
 			{
 				IsValid = true;
 			}

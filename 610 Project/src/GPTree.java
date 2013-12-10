@@ -22,12 +22,19 @@ public class GPTree {
 	      return result;
 
 	}
+	
+	//constructor
 	public GPTree()
 	{
 		index1 = generator.nextInt(3);
 		rootnode = new TreeNode(operators[index1]);
 		rootnode.level=0;
 	}
+	
+	//copy - constructor
+	  public GPTree(GPTree another) {
+		    this.rootnode = another.rootnode;
+		  }
 	
 
 	
@@ -59,6 +66,7 @@ public class GPTree {
 			index2 = generator.nextInt(4);
 			TreeNode newnode = new TreeNode(operators[index2]);
 			newnode.level = hight;
+			newnode.IsLeaf = false;
 			newnode.left = GenTree(hight+1);
 			newnode.right = GenTree(hight+1);
 			temp = newnode;
@@ -99,7 +107,7 @@ public class GPTree {
 		
 		if (Temp.IsLeaf == true ) 
 		{
-			if (Temp.data.equals("x")) evaluation = value;
+			if (Temp.data.compareTo("x") == 0) evaluation = value;
 			else evaluation = ToDouble(Temp.data);
 			
 		}
@@ -108,17 +116,20 @@ public class GPTree {
 			double leftvalue = EvaTree(Temp.left, value);
 			double rightvalue = EvaTree(Temp.right, value);
 			
+			if (Double.isNaN(leftvalue) || Double.isNaN(rightvalue)) evaluation = Double.NaN;
+			else{
 			if (Temp.data.compareTo("+") == 0) evaluation = leftvalue + rightvalue;
 			if (Temp.data.compareTo("-") == 0) evaluation = leftvalue - rightvalue;
 			if (Temp.data.compareTo("*") == 0) evaluation = leftvalue * rightvalue;
 			if (Temp.data.compareTo("/") == 0) 
 				{
-				if (Math.abs(rightvalue) <0.00001) evaluation = 99999999;
+				if (Math.abs(rightvalue) <0.0000001) evaluation = Double.NaN;
+				else evaluation = leftvalue / rightvalue;
 				
 				
 				}
 			
-			
+			}
 		}
 		
 		return evaluation;
@@ -128,10 +139,15 @@ public class GPTree {
 	
 	public void printTree(TreeNode temp)
 	
+	{	if (temp!=null)
 	{
-		if (temp.left!=null) printTree(temp.left);
+		
+			printTree(temp.left);
+		
 		System.out.print(temp.data);
-		if (temp.left!=null) printTree(temp.right);
+		
+			printTree(temp.right);
+	}
 	}
 	
 	public void mutation(TreeNode temp1, TreeNode temp2)

@@ -41,6 +41,7 @@ public class Mutation {
 	}
 	public void mutating(TreeNode temp)
 	{
+		
 		if (temp.left.IsLeaf)
 		{
 			String data = temp.left.data;

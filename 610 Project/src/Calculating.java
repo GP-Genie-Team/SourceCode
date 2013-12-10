@@ -7,7 +7,7 @@ public class Calculating {
 		
 		int index6, index7, index8;
 		
-		int index9, index10;
+		int index9, index10, cutoff;
 		long start,now, diff;
 
 		//TreeNode temp1, temp2;
@@ -15,13 +15,21 @@ public class Calculating {
 		getinput.getvariable();
 		
 
-		
+		Random generator = new Random();
 		final int POPULATION = getinput.size;
 		int height = GetInput.height;
+		cutoff = POPULATION*GetInput.percent/100;
+		final int CUT_OFF = POPULATION*GetInput.percent/100;
+		int rand [] = new int [CUT_OFF];
+		
+		for (index =0; index<CUT_OFF; index++)
+		{
+			rand[index] = index;
+		}
 		
 		
 		
-		Random generator = new Random();
+	
 		
 		Trainingdata training = new Trainingdata();
 		
@@ -33,6 +41,7 @@ public class Calculating {
 		start = System.currentTimeMillis( );
 		diff = 0;
 		
+
 		
 		// this part initialize the population, and sort them using the fitness data
 		GPTree [] Trees = new GPTree[POPULATION];
@@ -43,7 +52,9 @@ public class Calculating {
 		for (index2 = 0; index2<45; index2 ++)
 		{
 			double value = training.training_input[index2];
-			Trees[0].fitness += Math.abs(Trees[0].EvaTree(Trees[0].rootnode,value)-training.training_output[index2]);
+			double cal = Trees[0].EvaTree(Trees[0].rootnode,value);
+			if (Double.isNaN(cal)) Trees[0].fitness = Double.MAX_VALUE;
+			else Trees[0].fitness += Math.abs(cal-training.training_output[index2]);
 			
 		}
 		
@@ -61,7 +72,9 @@ public class Calculating {
 			for (index2 = 0; index2<45; index2 ++)
 			{
 				double value = training.training_input[index2];
-				Trees[index].fitness += Math.abs(Trees[index].EvaTree(Trees[index].rootnode,value)-training.training_output[index2]);
+				double cal = Trees[index].EvaTree(Trees[index].rootnode,value);
+				if (Double.isNaN(cal)) Trees[index].fitness = Double.MAX_VALUE;
+				else Trees[index].fitness += Math.abs(cal-training.training_output[index2]);
 				
 			}
 			
@@ -76,7 +89,14 @@ public class Calculating {
 			
 		}
 		
-
+		/*for (index =0; index <POPULATION; index ++)
+		{
+			System.out.println(Trees[index].fitness);
+			//Trees[index].printTree(Trees[index].rootnode);
+		}*/
+		
+		
+		
 		
 
 				
@@ -86,125 +106,144 @@ public class Calculating {
 		
 		//now generating next generation of population
 		//assuming keeping first 200 every time
-		while (diff < GetInput.timeinterval*360){
-		for (index3 = 0; index <1; index ++)
-		{
-			//first, crossover, using the kept 200 to generate another 100
-			for (index6 = 0; index6<50; index6++)
+		while (diff < GetInput.timeinterval*60*1000 && (Trees[0].fitness >=0.0)){
+			
+				//first, crossover, using the kept parent to generate a new set of children
+			
+			//random generate a set of random number for cross-over
+			
+			for (int i =0; i<100; i++)
 			{
-				index4 = generator.nextInt(200);
-				index5 = generator.nextInt(200);
-				index7 = 200+ 2 * index6;
-				index8 = 200 + 2 * index6 +1;
-			
-				Trees[index7] = Trees[index4];
-				Trees[index8] = Trees[index5];
-				mute.crossover(Trees[index7].rootnode, Trees[index8].rootnode);
-				
+				index1 = generator.nextInt(cutoff);
+				index2 = generator.nextInt(cutoff);
+				int j = rand[index1];
+				rand[index1]=rand[index2];
+				rand[index2] =j;
 			}
-			
-			//now insert the newly generated tree to the correct position
-			
-			for (index6 = 200; index6 <300; index ++)
-			{
-				
-				for (index2 = 0; index2<45; index2 ++)
-				{
-					double value = training.training_input[index2];
-					Trees[index6].fitness += Math.abs(Trees[index6].EvaTree(Trees[index6].rootnode,value)-training.training_output[index2]);
-					
-				}
-				
-				temp = Trees[index6];
-				
-				index8 = index6-1;
-				while( (index8>0) && (temp.fitness<Trees[index8-1].fitness))
-				{
-					Trees[index8] = Trees[index8-1];
-					index8 --;
-				}
-				Trees[index6] = temp;
-				
-			}
-			
-	
-				//first, mutation, using the kept 200 to generate another 100
-				for (index6 = 0; index6<100; index6++)
-				{
-					index4 = generator.nextInt(200);
-					index7 = index6 + 300;				
-					Trees[index7] = Trees[index4];
 
-					mute.mutating(Trees[index7].rootnode);
+			
+
+				for (index6 = 0; index6<cutoff/2; index6 ++)
+				{
+
+					index7 = cutoff + 2*index6;
+					index8 = cutoff + 2 * index6 +1;
+					
+					Trees[index7] = new GPTree(Trees[rand[index6*2]]);
+					Trees[index8] = new GPTree(Trees[rand[index6 *2 +1]]);
+					
+					mute.crossover(Trees[index7].rootnode, Trees[index8].rootnode);
+
 					
 				}
+	
 				
-				//now insert the newly generated tree to the correct position
 				
-				for (index6 = 300; index6 <400; index ++)
-				{
+		
+					//now, mutation, using the kept parent to generate another set of children using mutation
+					/*for (index6 = 0; index6<cutoff; index6++)
+					{
+						index4 = generator.nextInt(cutoff);
+						index7 = index6 + cutoff*2;				
+					 Trees[index7] = Trees[index4];
+						
+						//System.out.println(index7);
+						//Trees[index4].printTree(Trees[index4].rootnode);
+						mute.mutating(Trees[index7].rootnode);
+						
+						//System.out.println(index4);
+					}*/
 					
+		
+					//System.out.println("done1");
+					//now insert the newly generated tree to the correct position
+					
+					for (index = cutoff; index <cutoff*2; index ++)
+					{
+						
+						index1 = index;
+						for (index2 = 0; index2<45; index2 ++)
+						{
+							double value = training.training_input[index2];
+							double cal = Trees[index].EvaTree(Trees[index].rootnode,value);
+							if (Double.isNaN(cal)) Trees[index].fitness = Double.MAX_VALUE;
+							else Trees[index].fitness += Math.abs(cal-training.training_output[index2]);
+							
+						}
+						
+						
+						temp = Trees[index];
+						while( (index1>0) && (temp.fitness<Trees[index1-1].fitness))
+						{
+							Trees[index1] = Trees[index1-1];
+							index1 --;
+						}
+						Trees[index1] = temp;
+						
+
+						
+					}
+					
+					
+					//System.out.println("done2");
+				//now random generate the rest tree
+				
+				for (index=cutoff*2;index < POPULATION; index ++)
+				{
+					Trees[index] = new GPTree();
+					
+					Trees[index].rootnode.left = Trees[index].GenTree(1);
+					Trees[index].rootnode.right = Trees[index].GenTree(1);
+					
+					
+					index1 = index;
 					for (index2 = 0; index2<45; index2 ++)
 					{
 						double value = training.training_input[index2];
-						Trees[index6].fitness += Math.abs(Trees[index6].EvaTree(Trees[index6].rootnode,value)-training.training_output[index2]);
+						double cal = Trees[index].EvaTree(Trees[index].rootnode,value);
+						if (Double.isNaN(cal)) Trees[index].fitness = Double.MAX_VALUE;
+						else Trees[index].fitness += Math.abs(cal-training.training_output[index2]);
 						
 					}
-					temp = Trees[index6];
-					index8 = index6-1;
-					while( (index8>0) && (temp.fitness<Trees[index8-1].fitness))
+					
+					
+					temp = Trees[index];
+					while( (index1>0) && (temp.fitness<Trees[index1-1].fitness))
 					{
-						Trees[index8] = Trees[index8-1];
-						index8 --;
+						Trees[index1] = Trees[index1-1];
+						index1 --;
 					}
-					Trees[index6] = temp;
-					
-				}
-			
-			//now random generate the rest tree
-			
-			for (index=400;index < 500; index ++)
-			{
-				Trees[index] = new GPTree();
-				
-				Trees[index].rootnode.left = Trees[index].GenTree(1);
-				Trees[index].rootnode.right = Trees[index].GenTree(1);
-				
-				
-				index1 = index;
-				for (index2 = 0; index2<500; index2 ++)
-				{
-					double value = training.training_input[index2];
-					Trees[index].fitness += Math.abs(Trees[index].EvaTree(Trees[index].rootnode,value)-training.training_output[index2]);
-					
+					Trees[index1] = temp;
 				}
 				
-				temp = Trees[index];
-				while( (index1>0) && (temp.fitness<Trees[index1-1].fitness))
-				{
-					Trees[index1] = Trees[index1-1];
-					index1 --;
-				}
-				Trees[index1] = temp;
-				
-			}
-			
-			
-		}
-		now = System.currentTimeMillis( );
-		diff = now - start;
-
 		
+			
+			now = System.currentTimeMillis( );
+			diff = now - start;
+			//System.out.println(diff);
+			System.out.println(Trees[0].fitness);
+		//}
+			
 		}
-	
-		/*for (index =0; index <500; index ++)
+		
+		/*for (index =0; index <POPULATION; index ++)
 		{
 			System.out.println(Trees[index].fitness);
+			//Trees[index].printTree(Trees[index].rootnode);
 		}
 		*/
 		
+
 		
 		Trees[0].printTree(Trees[0].rootnode);
+		System.out.println("**********");
+		Trees[1].printTree(Trees[1].rootnode);
+		System.out.println("**********");
+		Trees[2].printTree(Trees[2].rootnode);
+		System.out.println("**********");
+		Trees[99].printTree(Trees[99].rootnode);
+
+		
 	}
 
 }

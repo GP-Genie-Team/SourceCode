@@ -13,8 +13,6 @@ public class TreeNode {
 	public TreeNode(String input)
 	{
 		this.data = input;
-		this.right = null;
-		this.left = null;
 		this.IsLeaf = false;
 		
 	}
@@ -23,8 +21,6 @@ public class TreeNode {
 	public TreeNode()
 	{
 		this.data = null;
-		this.right = null;
-		this.left = null;
 		this.IsLeaf = false;
 		
 		
