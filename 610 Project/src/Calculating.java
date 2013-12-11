@@ -141,24 +141,23 @@ public class Calculating {
 				
 		
 					//now, mutation, using the kept parent to generate another set of children using mutation
-					/*for (index6 = 0; index6<cutoff; index6++)
+					for (index6 = 0; index6<cutoff; index6++)
 					{
-						index4 = generator.nextInt(cutoff);
 						index7 = index6 + cutoff*2;				
-					 Trees[index7] = Trees[index4];
+						Trees[index7] = new GPTree(Trees[rand[index6]]);
 						
 						//System.out.println(index7);
 						//Trees[index4].printTree(Trees[index4].rootnode);
 						mute.mutating(Trees[index7].rootnode);
 						
 						//System.out.println(index4);
-					}*/
+					}
 					
 		
 					//System.out.println("done1");
 					//now insert the newly generated tree to the correct position
 					
-					for (index = cutoff; index <cutoff*2; index ++)
+					for (index = cutoff; index <cutoff*3; index ++)
 					{
 						
 						index1 = index;
@@ -188,7 +187,7 @@ public class Calculating {
 					//System.out.println("done2");
 				//now random generate the rest tree
 				
-				for (index=cutoff*2;index < POPULATION; index ++)
+				for (index=cutoff*3;index < POPULATION; index ++)
 				{
 					Trees[index] = new GPTree();
 					

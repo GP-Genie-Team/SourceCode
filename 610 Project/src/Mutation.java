@@ -41,14 +41,22 @@ public class Mutation {
 	}
 	public void mutating(TreeNode temp)
 	{
-		
-		if (temp.left.IsLeaf)
+		if (temp.left.IsLeaf && temp.right.IsLeaf)
 		{
 			String data = temp.left.data;
 			temp.left.data= temp.right.data;
 			temp.right.data = temp.left.data; 
 		}
-		else
+		
+		if (temp.left.IsLeaf && !temp.right.IsLeaf)
+		{
+			mutating(temp.right);
+		}
+		if (temp.right.IsLeaf && !temp.left.IsLeaf)
+		{
+			mutating(temp.left);
+		}
+		if (!temp.right.IsLeaf && !temp.left.IsLeaf)
 		{
 			index1 = generator.nextInt(2);
 			if (index1==1) mutating(temp.left);
