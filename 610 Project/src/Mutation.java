@@ -1,12 +1,11 @@
-import java.util.Random;
-
 import java.util.*;
 public class Mutation {
 	
 	Random generator = new Random();
 	int index1,index2;
-
 	
+
+	public String [] operatants = {"0","1","2","3","4","5","6","7","8","9","x"};
 	public void crossover(TreeNode temp1, TreeNode temp2)
 	{
 		if (temp1.IsLeaf && temp2.IsLeaf)
@@ -41,7 +40,7 @@ public class Mutation {
 	}
 	public void mutating(TreeNode temp)
 	{
-		if (temp.left.IsLeaf && temp.right.IsLeaf)
+		/*if (temp.left.IsLeaf && temp.right.IsLeaf)
 		{
 			String data = temp.left.data;
 			temp.left.data= temp.right.data;
@@ -61,9 +60,21 @@ public class Mutation {
 			index1 = generator.nextInt(2);
 			if (index1==1) mutating(temp.left);
 			else mutating(temp.right);
+		}1*/
+		
+		if (temp.IsLeaf)
+		{
+			index1 = generator.nextInt(11);
+			temp.data = operatants[index1];
+		}
+		else
+		{
+			index1 = generator.nextInt(2);
+			if (index1 ==1) mutating (temp.left);
+			else mutating (temp.right);
 		}
 			
-	}
+		}
 	
 	}
 
