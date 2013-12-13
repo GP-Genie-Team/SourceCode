@@ -162,7 +162,7 @@ public class Calculating {
 						
 						//System.out.println(index7);
 						//Trees[index4].printTree(Trees[index4].rootnode);
-						//mute.mutating(Trees[index7].rootnode);
+						mute.mutating(Trees[index7].rootnode);
 						
 						//System.out.println(index4);
 					}
