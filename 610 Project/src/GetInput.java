@@ -39,6 +39,23 @@ public class GetInput {
 		System.out.println("Welcome to GP Genie! ");
 		while (IsValid == false)
 		{
+			while (IsValid == false)
+			{
+				System.out.println("Please enter the size of population you would like to use for this project (between 100 to 400): ");
+				size = scan.nextInt();
+			
+				if (size<=400 && size >=100 ) 
+				{
+					IsValid = true;
+				}
+				else
+				{
+				IsValid = false;
+				}
+			}
+			
+			IsValid = false;
+
 			System.out.println("Please enter the height of tree you would like to use for this project (between 2 to 10): ");
 			height = scan.nextInt();
 		
@@ -54,22 +71,6 @@ public class GetInput {
 		
 		IsValid = false;
 		
-		while (IsValid == false)
-		{
-			System.out.println("Please enter the size of population you would like to use for this project (between 100 to 400): ");
-			size = scan.nextInt();
-		
-			if (size<=400 && size >=100 ) 
-			{
-				IsValid = true;
-			}
-			else
-			{
-			IsValid = false;
-			}
-		}
-		
-		IsValid = false;
 		
 		while (IsValid == false)
 		{

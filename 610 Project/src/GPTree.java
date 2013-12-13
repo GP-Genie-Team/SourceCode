@@ -9,7 +9,7 @@ public class GPTree {
 	
 	String [] operators = {"+","-","*","/"};
 	String [] operatants = {"0","1","2","3","4","5","6","7","8","9","x"};
-	String [] parens = {"(",")"};
+	
 	
 	int index1, index2;
 	Random generator = new Random();
@@ -146,15 +146,41 @@ public class GPTree {
 	
 	public void printTree(TreeNode temp)
 	
-	{	if (temp!=null)
-	{
+	{	
 		
+
+		if (temp!=null)
+		{
+		
+
+		if (temp.IsLeaf)
+
+			{
 			printTree(temp.left);
+			}
+		else
+			{
+			System.out.print("(");
+			printTree(temp.left);
+			}			
 		
+		//System.out.print(" ");
 		System.out.print(temp.data);
+		//System.out.print(" ");
 		
+
+		if (temp.IsLeaf)
+
+			{
 			printTree(temp.right);
-	}
+			}
+		else
+			{
+			printTree(temp.right);
+			System.out.print(")");
+			}	
+
+		}
 	}
 	
 	public void mutation(TreeNode temp1, TreeNode temp2)

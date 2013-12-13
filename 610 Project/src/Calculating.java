@@ -44,7 +44,7 @@ public class Calculating {
 
 		
 		// this part initialize the population, and sort them using the fitness data
-		System.out.println("Generating tree…");
+		System.out.println("Generating trees and calculating their fitness…");
 		
 		GPTree [] Trees = new GPTree[POPULATION];
 		Trees[0] = new GPTree();
@@ -96,12 +96,16 @@ public class Calculating {
 			
 		}
 		
-		/*for (index =0; index <POPULATION; index ++)
+		for (index =0; index <POPULATION; index ++)
 		{
-			System.out.println(Trees[index].fitness);
-			//Trees[index].printTree(Trees[index].rootnode);
-		}*/
-		
+			System.out.print(Trees[index].fitness);
+			System.out.print("\t");
+			Trees[index].printTree(Trees[index].rootnode);
+			System.out.println();
+		}
+		System.out.println("Above data shows initial trees sorted by fitness and their fitness values.");
+		System.out.println("Now performing crossover and mutation for next generation of trees...");
+
 		
 		
 		
@@ -113,7 +117,9 @@ public class Calculating {
 		
 		//now generating next generation of population
 		//assuming keeping first 200 every time
-		while (diff < GetInput.timeinterval*60*10 && (Trees[0].fitness >=0.0)){  //TODO SMM turn the 10 back into 1000 to get back to minutes.
+
+
+		while (diff < GetInput.timeinterval*60*1000 && (Trees[0].fitness >=0.0)){  //TODO SMM turn the 10 back into 1000 to get back to minutes.
 			
 				//first, crossover, using the kept parent to generate a new set of children
 			
@@ -130,7 +136,7 @@ public class Calculating {
 
 			
 
-				for (index6 = 0; index6<cutoff/2; index6 ++)
+			for (index6 = 0; index6<cutoff/2; index6 ++)
 				{
 
 					index7 = cutoff + 2*index6;
@@ -146,8 +152,9 @@ public class Calculating {
 	
 				
 				
-		/*
+
 					//now, mutation, using the kept parent to generate another set of children using mutation
+
 					for (index6 = 0; index6<cutoff; index6++)
 					{
 						index7 = index6 + cutoff*2;				
@@ -155,11 +162,11 @@ public class Calculating {
 						
 						//System.out.println(index7);
 						//Trees[index4].printTree(Trees[index4].rootnode);
-						mute.mutating(Trees[index7].rootnode);
+						//mute.mutating(Trees[index7].rootnode);
 						
 						//System.out.println(index4);
 					}
-		*/			
+			
 		
 					//System.out.println("done1");
 					//now insert the newly generated tree to the correct position
@@ -232,6 +239,7 @@ public class Calculating {
 		//}
 			
 		}
+		System.out.println("Population and trees after crossover and mutation:");
 		System.out.println();
 		for (index =0; index <POPULATION; index ++)
 		{
@@ -243,6 +251,7 @@ public class Calculating {
 			System.out.println();
 		}
 		
+		System.out.println("Run complete. Least fit and three fittest trees shown below.");
 
 
 		System.out.println();
@@ -255,8 +264,9 @@ public class Calculating {
 		System.out.print("Fit Percent\t");
 		System.out.print(GetInput.percent);
 		System.out.println();
-		System.out.print("Max Time\t");
-		System.out.print(GetInput.timeinterval);
+		System.out.print("Run Time\t");
+		System.out.print(diff/60000);
+		System.out.print(" minute(s)");
 		
 		System.out.println();
 		System.out.println();

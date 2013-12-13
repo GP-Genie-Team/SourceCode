@@ -11,11 +11,11 @@ public class Test20131210 {
 		tree.rootnode.left.IsLeaf = false;
 		tree.rootnode.right.IsLeaf = false;
 		
-		tree.rootnode.left.left = new TreeNode ("10.0");
+		tree.rootnode.left.left = new TreeNode ("10");
 		
-		tree.rootnode.left.right = new TreeNode ("5.0");
-		tree.rootnode.right.left = new TreeNode ("7.0");
-		tree.rootnode.right.right = new TreeNode ("1.0");
+		tree.rootnode.left.right = new TreeNode ("5");
+		tree.rootnode.right.left = new TreeNode ("7");
+		tree.rootnode.right.right = new TreeNode ("1");
 		
 		tree.rootnode.left.left.IsLeaf = true;
 		tree.rootnode.left.right.IsLeaf = true;
