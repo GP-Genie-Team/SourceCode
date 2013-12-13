@@ -9,6 +9,7 @@ public class GPTree {
 	
 	String [] operators = {"+","-","*","/"};
 	String [] operatants = {"0","1","2","3","4","5","6","7","8","9","x"};
+	String [] parens = {"(",")"};
 	
 	int index1, index2;
 	Random generator = new Random();
@@ -26,9 +27,11 @@ public class GPTree {
 	//constructor
 	public GPTree()
 	{
-		index1 = generator.nextInt(3);
+		//index1 = generator.nextInt(3); //TODO - Li: Why is this a 3? If root is operand, should be a 4
+		index1 = generator.nextInt(4);
 		rootnode = new TreeNode(operators[index1]);
 		rootnode.level=0;
+		//System.out.print(rootnode);
 	}
 	
 	//copy - constructor
@@ -41,14 +44,17 @@ public class GPTree {
 	
 	public TreeNode GenTree(int hight)
 	{
-		//decide whether this is an operator or operatant
+		//decide whether this is an operator or operand
 		TreeNode temp;
+
+		
 		
 		index1 = generator.nextInt(2);
-		//System.out.println(index1);
 		
-		if ((index1==1) | (hight == HEIGHT))
+		
+		if ((index1==1) | (hight == HEIGHT)) // if index1 == 1 then a random operand will be generated
 		{
+			//TODO - SMM: is this where we need to place a "(" ?
 			index2 = generator.nextInt(11);
 			TreeNode newnode;
 			
@@ -57,11 +63,12 @@ public class GPTree {
 			newnode.level = hight;
 			newnode.IsLeaf = true;
 			temp = newnode;
-			
+			//TODO - SMM: and here a ")" ?
+
 			
 				
 		}
-		else
+		else   // index1 == 0 so a random operator will be generated
 		{
 			index2 = generator.nextInt(4);
 			TreeNode newnode = new TreeNode(operators[index2]);

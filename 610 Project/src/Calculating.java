@@ -44,13 +44,20 @@ public class Calculating {
 
 		
 		// this part initialize the population, and sort them using the fitness data
+		System.out.println("Generating tree…");
+		
 		GPTree [] Trees = new GPTree[POPULATION];
 		Trees[0] = new GPTree();
-
+		
+		
 		Trees[0].rootnode.left = Trees[0].GenTree(1);
+
 		Trees[0].rootnode.right = Trees[0].GenTree(1);
+	
+		
 		for (index2 = 0; index2<45; index2 ++)
 		{
+			
 			double value = training.training_input[index2];
 			double cal = Trees[0].EvaTree(Trees[0].rootnode,value);
 			if (Double.isNaN(cal)) Trees[0].fitness = Double.MAX_VALUE;
@@ -106,7 +113,7 @@ public class Calculating {
 		
 		//now generating next generation of population
 		//assuming keeping first 200 every time
-		while (diff < GetInput.timeinterval*60*1000 && (Trees[0].fitness >=0.0)){
+		while (diff < GetInput.timeinterval*60*10 && (Trees[0].fitness >=0.0)){  //TODO SMM turn the 10 back into 1000 to get back to minutes.
 			
 				//first, crossover, using the kept parent to generate a new set of children
 			
@@ -139,7 +146,7 @@ public class Calculating {
 	
 				
 				
-		
+		/*
 					//now, mutation, using the kept parent to generate another set of children using mutation
 					for (index6 = 0; index6<cutoff; index6++)
 					{
@@ -152,7 +159,7 @@ public class Calculating {
 						
 						//System.out.println(index4);
 					}
-					
+		*/			
 		
 					//System.out.println("done1");
 					//now insert the newly generated tree to the correct position
@@ -211,6 +218,7 @@ public class Calculating {
 					{
 						Trees[index1] = Trees[index1-1];
 						index1 --;
+
 					}
 					Trees[index1] = temp;
 				}
@@ -220,29 +228,64 @@ public class Calculating {
 			now = System.currentTimeMillis( );
 			diff = now - start;
 			//System.out.println(diff);
-			System.out.println(Trees[0].fitness);
+			//System.out.println(Trees[0].fitness);
 		//}
 			
 		}
-		
-		/*for (index =0; index <POPULATION; index ++)
+		System.out.println();
+		for (index =0; index <POPULATION; index ++)
 		{
-			System.out.println(Trees[index].fitness);
-			//Trees[index].printTree(Trees[index].rootnode);
+			System.out.print(Trees[index].fitness);
+			System.out.print("\t");
+			Trees[index].printTree(Trees[index].rootnode);
+
+
+			System.out.println();
 		}
-		*/
 		
 
+
+		System.out.println();
+		System.out.print("Population\t");
+		System.out.print(GetInput.size);
+		System.out.println();
+		System.out.print("Max Height\t");
+		System.out.print(GetInput.height);
+		System.out.println();
+		System.out.print("Fit Percent\t");
+		System.out.print(GetInput.percent);
+		System.out.println();
+		System.out.print("Max Time\t");
+		System.out.print(GetInput.timeinterval);
 		
-		Trees[0].printTree(Trees[0].rootnode);
-		System.out.println("**********");
-		Trees[1].printTree(Trees[1].rootnode);
-		System.out.println("**********");
-		Trees[2].printTree(Trees[2].rootnode);
-		System.out.println("**********");
+		System.out.println();
+		System.out.println();
+		
+		System.out.print("Tree 99\t");
+		System.out.print(Trees[99].fitness);
+		System.out.print("\t");
 		Trees[99].printTree(Trees[99].rootnode);
-
+		System.out.println();
 		
+		System.out.print("Tree  2\t");
+		System.out.print(Trees[2].fitness);
+		System.out.print("\t");
+		Trees[2].printTree(Trees[2].rootnode);
+		System.out.println();
+		
+		System.out.print("Tree  1\t");
+		System.out.print(Trees[1].fitness);
+		System.out.print("\t");
+		Trees[1].printTree(Trees[1].rootnode);
+		System.out.println();
+		
+		System.out.print("Tree  0\t");
+		System.out.print(Trees[0].fitness);
+		System.out.print("\t");
+		Trees[0].printTree(Trees[0].rootnode);
+		System.out.println();
+		
+
 	}
 
 }
