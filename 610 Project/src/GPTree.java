@@ -10,7 +10,6 @@ public class GPTree {
 	String [] operators = {"+","-","*","/"};
 	String [] operatants = {"0","1","2","3","4","5","6","7","8","9","x"};
 	
-	
 	int index1, index2;
 	Random generator = new Random();
 	//constructor, here use code to make sure that the root is an operator
@@ -27,11 +26,9 @@ public class GPTree {
 	//constructor
 	public GPTree()
 	{
-		//index1 = generator.nextInt(3); //TODO - Li: Why is this a 3? If root is operand, should be a 4
 		index1 = generator.nextInt(4);
 		rootnode = new TreeNode(operators[index1]);
 		rootnode.level=0;
-		//System.out.print(rootnode);
 	}
 	
 	//copy - constructor
@@ -42,40 +39,36 @@ public class GPTree {
 
 	
 	
-	public TreeNode GenTree(int hight)
+	public TreeNode GenTree(int height)
 	{
 		//decide whether this is an operator or operand
 		TreeNode temp;
-
-		
 		
 		index1 = generator.nextInt(2);
+		//System.out.println(index1);
 		
-		
-		if ((index1==1) | (hight == HEIGHT)) // if index1 == 1 then a random operand will be generated
+		if ((index1==1) | (height == HEIGHT))  // if index1 == 1 then a random operand will be generated
 		{
-			//TODO - SMM: is this where we need to place a "(" ?
 			index2 = generator.nextInt(11);
 			TreeNode newnode;
 			
 			newnode = new TreeNode(operatants[index2]);
 			
-			newnode.level = hight;
+			newnode.level = height;
 			newnode.IsLeaf = true;
 			temp = newnode;
-			//TODO - SMM: and here a ")" ?
-
+			
 			
 				
 		}
-		else   // index1 == 0 so a random operator will be generated
+		else
 		{
 			index2 = generator.nextInt(4);
 			TreeNode newnode = new TreeNode(operators[index2]);
-			newnode.level = hight;
+			newnode.level = height;
 			newnode.IsLeaf = false;
-			newnode.left = GenTree(hight+1);
-			newnode.right = GenTree(hight+1);
+			newnode.left = GenTree(height+1);
+			newnode.right = GenTree(height+1);
 			temp = newnode;
 			
 
@@ -108,7 +101,7 @@ public class GPTree {
 	
 	
 	//used to calculate the fitness of the GP tree
-	public double EvaTree(TreeNode Temp, double value)
+	public double EvalTree(TreeNode Temp, double value)
 	{
 		double evaluation =0;
 		
@@ -120,8 +113,8 @@ public class GPTree {
 		}
 		else
 		{
-			double leftvalue = EvaTree(Temp.left, value);
-			double rightvalue = EvaTree(Temp.right, value);
+			double leftvalue = EvalTree(Temp.left, value);
+			double rightvalue = EvalTree(Temp.right, value);
 			
 			if (Double.isNaN(leftvalue) || Double.isNaN(rightvalue)) evaluation = Double.NaN;
 			else{
@@ -144,7 +137,7 @@ public class GPTree {
 	}
 	
 	
-	public void printTree(TreeNode temp)
+	public void PrintTree(TreeNode temp)
 	
 	{	
 		
@@ -152,38 +145,34 @@ public class GPTree {
 		if (temp!=null)
 		{
 		
-
-		if (temp.IsLeaf)
-
-			{
-			printTree(temp.left);
-			}
-		else
-			{
-			System.out.print("(");
-			printTree(temp.left);
-			}			
+			if (temp.IsLeaf)
+				{
+				PrintTree(temp.left);
+				}
+			else
+				{
+				System.out.print("(");
+				PrintTree(temp.left);
+				}			
 		
-		//System.out.print(" ");
-		System.out.print(temp.data);
-		//System.out.print(" ");
-		
-
-		if (temp.IsLeaf)
-
-			{
-			printTree(temp.right);
-			}
-		else
-			{
-			printTree(temp.right);
-			System.out.print(")");
-			}	
-
+			System.out.print(temp.data);
+	
+	
+			if (temp.IsLeaf)
+				{
+				PrintTree(temp.right);
+				}
+			else
+				{
+				PrintTree(temp.right);
+				System.out.print(")");
+				}	
 		}
 	}
 	
-	public void mutation(TreeNode temp1, TreeNode temp2)
+	//TODO: Cleanup - let's remove this unused class
+/*	
+ * 	public void mutation(TreeNode temp1, TreeNode temp2)
 	{
 		if (temp1.IsLeaf && temp2.IsLeaf)
 		{String temp = temp1.data;
@@ -199,7 +188,7 @@ public class GPTree {
 			if (index1 == 1 && index2 ==1) mutation(temp1.right,temp2.right);
 		}
 	}
-
+*/
 
 	
 	
