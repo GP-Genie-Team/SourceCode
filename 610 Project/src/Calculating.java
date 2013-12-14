@@ -6,9 +6,12 @@ public class Calculating {
 		int index, index1,index2, index3, index4, index5;
 		
 		int index6, index7, index8;
+		double [] finalprint = new double [10000000];
 		
 		int index9, index10, cutoff;
 		long start,now, diff;
+		index10 =0;
+		index9=0;
 
 		//TreeNode temp1, temp2;
 		GetInput getinput = new GetInput();
@@ -109,13 +112,15 @@ public class Calculating {
 		System.out.println("Now performing crossover and mutation for next generation of trees...");
 		
 		
-		
+		finalprint[0] = Trees[0].fitness;
+		index10 =1;
 		
 
 						
 		//now generating next generation of population
 		//assuming keeping first 200 every time
 		while (diff < GetInput.timeinterval*60*1000 && (Trees[0].fitness >=0.0)){
+			index9++;
 			
 				//first, crossover, using the kept parent to generate a new set of children
 			
@@ -166,7 +171,7 @@ public class Calculating {
 					//System.out.println("done1");
 					//now insert the newly generated tree to the correct position
 					
-					for (index = cutoff; index <cutoff*2; index ++)
+					for (index = cutoff; index <cutoff*3; index ++)
 					{
 						
 						index1 = index;
@@ -229,7 +234,13 @@ public class Calculating {
 			now = System.currentTimeMillis( );
 			diff = now - start;
 			//System.out.println(diff);
-			System.out.println(Trees[0].fitness);
+			//System.out.println(Trees[0].fitness);
+			if ((index9 % 100) == 0 && (index9 >= 100))
+			{
+				finalprint[index10] = Trees[0].fitness;
+				index10++;
+			}
+			
 		//}
 			
 		}
@@ -245,6 +256,8 @@ public class Calculating {
 
 			System.out.println();
 		}
+		
+		
 		
 		System.out.println("Run complete. Least fit and three fittest trees shown below.");
 
@@ -293,7 +306,12 @@ public class Calculating {
 		Trees[0].PrintTree(Trees[0].rootnode);
 		System.out.println();
 		
-
+		System.out.println("Fiteness: ");
+		for (index10=0; index10< 1000; index10 ++)
+		{
+			if (finalprint[index10]>= 0.00) System.out.println(finalprint[index10]);
+		}
+		
 	}
 
 }
