@@ -22,8 +22,7 @@ public class Test20131210 {
 		tree.rootnode.right.left.IsLeaf = true;
 		tree.rootnode.right.right.IsLeaf = true;
 		
-		System.out.println(tree.EvalTree(tree.rootnode, 1));
-		
-		tree.PrintTree(tree.rootnode);
+		System.out.println(tree.EvaTree(tree.rootnode, 1));
+		tree.printTree(tree.rootnode);
 	}
 }
